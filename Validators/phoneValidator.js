@@ -1,5 +1,14 @@
-const passwordValidator = (phone) => {
-    return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone);
+const geoIp = require("geoip-country");
+const { parsePhoneNumber } = require("libphonenumber-js");
+
+const passwordValidator = (ip, phone) => {
+    const phoneNumber = parsePhoneNumber(phone);
+    console.log(phoneNumber);
+    if (!phoneNumber.isValid()) {
+        throw new Error("Phone number is incorrect");
+    }
+    const internationalFormat = phoneNumber.formatInternational();
+    return internationalFormat;
 };
 
 module.exports = passwordValidator;
